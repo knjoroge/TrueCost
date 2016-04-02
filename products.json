@@ -35,7 +35,7 @@ var products = {
 				"value" : 3733.33,
 				"unit" : "Liters"
 			},
-			"water_footprint" : {
+			"waste_footprint" : {
 				"value" : 0.95,
 				"unit" : "Kg"
 			},
