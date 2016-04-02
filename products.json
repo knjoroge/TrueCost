@@ -1,0 +1,70 @@
+var products = {
+	"shoes" : {
+		"B002RP8YH2" : {
+			"energy_footprint" : {
+				"value" : 204.23,
+				"unit" : "MJ"
+			},
+			"greenhouse_footprint" : {
+				"value" : 13.76,
+				"unit" : "kgCO2e"
+			},
+			"water_footprint" : {
+				"value" : 4424.42,
+				"unit" : "Liters"
+			},
+			"waste_footprint" : {
+				"value" : 1.04,
+				"unit" : "Kg"
+			},
+			"chemistry_footprint" : {
+				"value" : 0.101,
+				"unit" : "kgNMVOCe"
+			}
+		},
+		"B00DP3RXMC": {
+			"energy_footprint" : {
+				"value" : 178.77,
+				"unit" : "MJ"
+			},
+			"greenhouse_footprint" : {
+				"value" : 11.96,
+				"unit" : "kgCO2e"
+			},
+			"water_footprint" : {
+				"value" : 3733.33,
+				"unit" : "Liters"
+			},
+			"water_footprint" : {
+				"value" : 0.95,
+				"unit" : "Kg"
+			},
+			"chemistry_footprint" : {
+				"value" : 0.95,
+				"unit" : "kgNMVOCe"
+			}
+		},
+		"B00IOQLDIA" : {
+			"energy_footprint" : {
+				"value" : 156.07,
+				"unit" : "MJ"
+			},
+			"greenhouse_footprint" : {
+				"value" : 10.88,
+				"unit" : "kgCO2e"
+			},
+			"water_footprint" : {
+				"value" : 3867.92,
+				"unit" : "Liters"
+			},
+			"waste_footprint" : {
+				"value" : 0.67,
+				"unit" : "Kg"
+			},
+			"chemistry_footprint" : {
+				"value" : 0.081,
+				"unit" : "kgNMVOCe"
+			}
+		}
+	}
+}
