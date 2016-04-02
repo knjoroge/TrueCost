@@ -1,70 +1,166 @@
 var products = {
 	"shoes" : {
 		"B002RP8YH2" : {
+			"name" : "Air Pegasus 25 (2008)",
 			"energy_footprint" : {
-				"value" : 204.23,
+				"usage" : 204.23,
 				"unit" : "MJ"
 			},
 			"greenhouse_footprint" : {
-				"value" : 13.76,
-				"unit" : "kgCO2e"
+				"usage" : 13.76,
+				"unit" : "kgCO2e",
+				"cost" : 0.49536
 			},
 			"water_footprint" : {
-				"value" : 4424.42,
+				"usage" : 4424.42,
 				"unit" : "Liters"
 			},
 			"waste_footprint" : {
-				"value" : 1.04,
+				"usage" : 1.04,
 				"unit" : "Kg"
 			},
-			"chemistry_footprint" : {
-				"value" : 0.101,
-				"unit" : "kgNMVOCe"
-			}
+			"ozone_footprint" : {
+				"usage" : 0.101,
+				"unit" : "kgNMVOCe",
+				"cost" : 0.143117
+			},
+			"total_footprint_cost": 0.638477
 		},
 		"B00DP3RXMC": {
+			"name" : "Air Pegasus 30 (2014)",
 			"energy_footprint" : {
-				"value" : 178.77,
+				"usage" : 178.77,
 				"unit" : "MJ"
 			},
 			"greenhouse_footprint" : {
-				"value" : 11.96,
-				"unit" : "kgCO2e"
+				"usage" : 11.96,
+				"unit" : "kgCO2e",
+				"cost" : 0.43056
 			},
 			"water_footprint" : {
-				"value" : 3733.33,
-				"unit" : "Liters"
-			},
-			"water_footprint" : {
-				"value" : 0.95,
-				"unit" : "Kg"
-			},
-			"chemistry_footprint" : {
-				"value" : 0.95,
-				"unit" : "kgNMVOCe"
-			}
-		},
-		"B00IOQLDIA" : {
-			"energy_footprint" : {
-				"value" : 156.07,
-				"unit" : "MJ"
-			},
-			"greenhouse_footprint" : {
-				"value" : 10.88,
-				"unit" : "kgCO2e"
-			},
-			"water_footprint" : {
-				"value" : 3867.92,
+				"usage" : 3733.33,
 				"unit" : "Liters"
 			},
 			"waste_footprint" : {
-				"value" : 0.67,
+				"usage" : 0.95,
 				"unit" : "Kg"
 			},
-			"chemistry_footprint" : {
-				"value" : 0.081,
-				"unit" : "kgNMVOCe"
-			}
+			"ozone_footprint" : {
+				"usage" : 0.95,
+				"unit" : "kgNMVOCe",
+				"cost" : 0.116194
+			},
+			"total_footprint_cost" : 0.546754
+		},
+		"B00IOQLDIA" : {
+			"name" : "Flyknit Lunar2 (2014)",
+			"energy_footprint" : {
+				"usage" : 156.07,
+				"unit" : "MJ"
+			},
+			"greenhouse_footprint" : {
+				"usage" : 10.88,
+				"unit" : "kgCO2e",
+				"cost" : 0.39168
+			},
+			"water_footprint" : {
+				"usage" : 3867.92,
+				"unit" : "Liters"
+			},
+			"waste_footprint" : {
+				"usage" : 0.67,
+				"unit" : "Kg"
+			},
+			"ozone_footprint" : {
+				"usage" : 0.081,
+				"unit" : "kgNMVOCe",
+				"cost" : 0.114777
+			},
+			"total_footprint_cost" : 0.506457
+		}
+	},
+	"computers" : {
+		"B004MJ9O34" : {
+			"name" : "Dell Optiplex 780",
+			"greenhouse_footprint" : {
+				"usage" : 164,
+				"unit" : "kgCO2e",
+				"cost" : 5.904
+			},
+			"total_footprint_cost" : 5.904
+		},
+		"B016L3NFO2" : {
+			"name" : "Dell FX-100",
+			"greenhouse_footprint" : {
+				"usage" : 33.6,
+				"unit" : "kgCO2e",
+				"cost" : 1.2096
+			},
+			"total_footprint_cost" : 1.2096
+		},
+		"B00197YHHK" : {
+			"name" : "HP 350",
+			"greenhouse_footprint" : {
+				"usage" : 108,
+				"unit" : "kgCO2e",
+				"cost" : 3.888
+			},
+			"total_footprint_cost" : 3.888
+		},
+		"B002BH4N12" : {
+			"name" : "HP Mini 110-1030",
+			"greenhouse_footprint" : {
+				"usage" : 62.2,
+				"unit" : "kgCO2e",
+				"cost" : 2.2392
+			},
+			"total_footprint_cost" : 2.2392
+		}
+	},
+	"phones" : {
+		"B00IZ1XVAC" : {
+			"name" : "Galaxy S5",
+			"greenhouse_footprint" : {
+				"usage" : 16.98,
+				"unit" : "kgCO2e",
+				"cost" : 0.61128
+			},
+			"total_footprint_cost" : 0.61128
+		},
+		"B002M3SOBU" : {
+			"name" : "Apple iPod Touch 8GB third gen",
+			"greenhouse_footprint" : {
+				"usage" : 7.5,
+				"unit" : "kgCO2e",
+				"cost" : 0.27
+			},
+			"total_footprint_cost" : 0.27
+		}
+	},
+	"ethernet switch": {
+		"B00006BA2U" : {
+			"name" : "3Com SuperStack Baseline 10/100 Switch 24-Port",
+			"greenhouse_footprint" : {
+				"usage" : 91.8,
+				"unit" : "kgCO2e",
+				"cost" : 3.3048
+			},
+			"total_footprint_cost" : 3.3048
+		}
+	},
+	"clothes" : {
+		"B0018OR118" : {
+			"name" : "Levi's Men's 501 Original-Fit Jean",
+			"greenhouse_footprint" : {
+				"usage" : 33.4,
+				"unit" : "kgCO2e",
+				"cost" : 3.3048
+			},
+			"water_footprint" : {
+				"usage" : 3781,
+				"unit" : "Liters"
+			},
+			"total_footprint_cost" : 1.2024
 		}
 	}
 }
