@@ -18,6 +18,8 @@
 // @resource css https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
+// @grant        GM_setValue
+// @grant        GM_getValue
 // ==/UserScript==
 
 (function() {
@@ -38,6 +40,24 @@
       isAddToCartPage = /\/huc\//.test(location.href),
       isCheckoutPage = /\/buy\//.test(location.href);
 
+  // Find product by ASIN from products JSON
+  function findProductByAsin(asin){
+    return products[(asin || '').toUpperCase()] || products.B002RP8YH2;
+  }
+
+  // Get last donation amount
+  function getLastDonation(){
+    return accounting.formatMoney(GM_getValue('lastDonation'));
+  }
+
+  // Set last donation amount
+  function setLastDonation(cost){
+    if(cost && cost > 0){
+      GM_setValue('lastDonation', cost);
+    }
+  }
+
+  // For product page
   function addTrueCostView(){
     console.log('add true cost');
 
@@ -46,7 +66,7 @@
         cost = accounting.unformat($cost.text()),
         $addToCart = $('#add-to-cart-button').closest('.a-button-stack'),
         asin = $('#ASIN').val(),
-        product = products.shoes[asin] || products.shoes.B002RP8YH2;
+        product = findProductByAsin(asin);
 
     var $icoCarbon = $('<i/>').addClass('fa-ico fa fa-cloud').attr('title', 'Carbon'),
         $icoEnergy = $('<i/>').addClass('fa-ico fa fa-bolt').attr('title', 'Energy'),
@@ -96,6 +116,8 @@
           .text(checkboxText)
           .prepend($inputCheckbox);
 
+    setLastDonation(productCost);
+
     var $footprint = $('<div/>')
       .addClass('product-impact')
       .append($carbon)
@@ -113,16 +135,12 @@
     $addToCart.after($wrapper);
   }
 
-  // Product page
-  if(isProductPage){
-    $(document).on('change', '#native_dropdown_selected_size_name', function(){
-      setTimeout(addTrueCostView, 500);
-    });
-
-    addTrueCostView();
+  // Checkout page
+  if(isCheckoutPage){
+    console.log('checkout page');
   // Add Product To Cart page
   } else if(isAddToCartPage){
-    console.log('added product to cart');
+    console.log('added product to cart', getLastDonation());
 
     var totalCostOutput = "<![CDATA[<span class='a-size-medium a-align-center huc-subtotal'>";
     totalCostOutput += "<span><b>Offset subtotal</b> (1 items): </span>";
@@ -131,8 +149,12 @@
 
     var $carOutput = $("#hlb-subcart .a-row:last-child").html(totalCostOutput);
 
-  // Checkout page
-  } else if(isCheckoutPage){
-    console.log('checkout page');
+  // Product page
+  } else if(isProductPage){
+    $(document).on('change', '#native_dropdown_selected_size_name', function(){
+      setTimeout(addTrueCostView, 1000);
+    });
+
+    addTrueCostView();
   }
 })();
