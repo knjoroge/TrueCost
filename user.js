@@ -76,8 +76,6 @@
   function addTrueCostView(){
     console.log('add true cost');
 
-    if(!!$('.true-cost').length) return;
-
     // Get cost
     var $cost = $('#priceblock_ourprice'),
         cost = accounting.unformat($cost.text()),
@@ -155,7 +153,9 @@
       .append($productImpact)
       .append($footprint);
 
-    $addToCart.after($wrapper);
+    if(!$('.true-cost').length) {
+      $addToCart.after($wrapper);
+    }
   }
 
   // Checkout page
