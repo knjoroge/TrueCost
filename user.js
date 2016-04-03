@@ -141,10 +141,10 @@
   // Add Product To Cart page
   } else if(isAddToCartPage){
     console.log('added product to cart', getLastDonation());
-
+    var lastDonation = getLastDonation();
     var totalCostOutput = "<span class='a-size-medium a-align-center huc-subtotal'>";
-    totalCostOutput += "<span><b>Offset subtotal</b> (1 items): </span>";
-    totalCostOutput += "<span class='a-color-price hlb-price a-inline-block a-text-bold'>$10</span>";
+    totalCostOutput += "<span><b>Offset subtotal</b> (1 item): </span>";
+    totalCostOutput += "<span class='a-color-price hlb-price a-inline-block a-text-bold'>" + lastDonation + "</span>";
     totalCostOutput += "</span>";
 
     var $carOutput = $("#hlb-subcart .a-row:last-child").html(totalCostOutput);
