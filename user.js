@@ -35,6 +35,8 @@
   GM_addStyle(".product-impact { margin-bottom: 10px; }");
   GM_addStyle(".product-impact-header { color: green; padding: 10px 25px 0; }");
   GM_addStyle(".true-cost { background-color: #E5F3FF; border: 1px solid #BBB; border-radius: 3px; margin: 10px 0 20px; padding: 8px; }");
+  GM_addStyle(".color-green { color: Green; }");    
+  GM_addStyle(".add-to-cart-margin{ margin: 0px 0 5px; }");
 
   var isProductPage = /\/[dg]p\//.test(location.href),
       isAddToCartPage = /\/huc\//.test(location.href),
@@ -142,10 +144,11 @@
   } else if(isAddToCartPage){
     console.log('added product to cart', getLastDonation());
     var lastDonation = getLastDonation();
-    var totalCostOutput = "<span class='a-size-medium a-align-center huc-subtotal'>";
-    totalCostOutput += "<span><b>Offset subtotal</b> (1 item): </span>";
-    totalCostOutput += "<span class='a-color-price hlb-price a-inline-block a-text-bold'>" + lastDonation + "</span>";
-    totalCostOutput += "</span>";
+    var totalCostOutput = "<div class='true-cost add-to-cart-margin'><span class='a-size-medium a-align-center huc-subtotal'>";
+    totalCostOutput += "<span><b>Donation subtotal </b></span>";
+    totalCostOutput += "<span class='color-green hlb-price a-inline-block a-text-bold'>" + lastDonation + "</span>";
+    totalCostOutput += "</span></div>";
+
 
     var $carOutput = $("#hlb-subcart .a-row:last-child").html(totalCostOutput);
 
