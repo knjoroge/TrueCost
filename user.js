@@ -44,7 +44,17 @@
 
   // Find product by ASIN from products JSON
   function findProductByAsin(asin){
-    return products[(asin || '').toUpperCase()] || products.B002RP8YH2;
+    var product = products[(asin || '').toUpperCase()],
+        defaultProduct = {};
+
+    if(product){
+      console.log('found product', product.name, product);
+    } else {
+      defaultProduct = products.B002RP8YH2;
+      console.log('did not find product for', asin, 'defaulting to', defaultProduct);
+    }
+
+    return product || defaultProduct;
   }
 
   // Get last donation amount
@@ -59,15 +69,22 @@
     }
   }
 
+  // When AJAX changes Add to Cart section
+  function timedAddTrueCostView(){
+    setTimeout(addTrueCostView, 1000);
+  }
+
   // For product page
   function addTrueCostView(){
     console.log('add true cost');
 
+    if(!!$('.true-cost').length) return;
+
     // Get cost
     var $cost = $('#priceblock_ourprice'),
         cost = accounting.unformat($cost.text()),
-        $addToCart = $('#add-to-cart-button').closest('.a-button-stack'),
-        asin = $('#ASIN').val(),
+        $addToCart = $('#add-to-cart-button, #add-to-cart-button-ubb').closest('.a-button-stack'),
+        asin = jQuery('#detailBullets_feature_div').find('span:contains("ASIN"):first').find('span:last').text() || $('#ASIN').val(),
         product = findProductByAsin(asin);
 
     var $icoCarbon = $('<i/>').addClass('fa-ico fa fa-cloud').attr('title', 'Carbon'),
@@ -154,9 +171,8 @@
 
   // Product page
   } else if(isProductPage){
-    $(document).on('change', '#native_dropdown_selected_size_name', function(){
-      setTimeout(addTrueCostView, 1000);
-    });
+    $(document).on('change', '#native_dropdown_selected_size_name', timedAddTrueCostView);
+    $(document).on('click', '.a-declarative', timedAddTrueCostView);
 
     addTrueCostView();
   }
