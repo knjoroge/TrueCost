@@ -167,7 +167,7 @@
   	  totalCostOutputStep3 += "<td class='color-green a-size-medium a-text-right a-align-bottom aok-nowrap grand-total-price a-text-bold'>" + accounting.formatMoney(lastDonationStep3);
   	  totalCostOutputStep3 += "</td></tr>";
 
-  	var $carOutput = $("#subtotals tbody").append(totalCostOutputStep3);
+  	var $carOutput = $(".order-summary-grand-total").closest('tbody').append(totalCostOutputStep3);
 
   // Add Product To Cart page
   } else if(isAddToCartPage){
