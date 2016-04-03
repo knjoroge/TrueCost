@@ -140,14 +140,22 @@
   // Checkout page
   if(isCheckoutPage){
     console.log('checkout page');
+    var lastDonationStep3 = getLastDonation();
+    var totalCostOutputStep3 = "<tr data-testid=''><td class='color-green a-size-medium a-text-left a-text-bold'>";
+	    totalCostOutputStep3 += "True Cost Donation total:</td>";
+  	  totalCostOutputStep3 += "<td class='a-color-price a-size-medium a-text-right a-align-bottom aok-nowrap grand-total-price a-text-bold'>" + lastDonationStep3;
+  	  totalCostOutputStep3 += "</td></tr>";
+
+  	var $carOutput = $("tbody").append(totalCostOutputStep3);
+
   // Add Product To Cart page
   } else if(isAddToCartPage){
     console.log('added product to cart', getLastDonation());
     var lastDonation = getLastDonation();
     var totalCostOutput = "<div class='true-cost add-to-cart-margin'><span class='a-size-medium a-align-center huc-subtotal'>";
-    totalCostOutput += "<span><b>Donation subtotal </b></span>";
-    totalCostOutput += "<span class='color-green hlb-price a-inline-block a-text-bold'>" + lastDonation + "</span>";
-    totalCostOutput += "</span></div>";
+	    totalCostOutput += "<span><b>True Cost Donation subtotal </b></span>";
+	    totalCostOutput += "<span class='color-green hlb-price a-inline-block a-text-bold'>" + lastDonation + "</span>";
+	    totalCostOutput += "</span></div>";
 
 
     var $carOutput = $("#hlb-subcart .a-row:last-child").html(totalCostOutput);
