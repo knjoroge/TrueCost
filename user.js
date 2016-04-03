@@ -35,7 +35,7 @@
   GM_addStyle(".product-impact { margin-bottom: 10px; }");
   GM_addStyle(".product-impact-header { color: green; padding: 10px 25px 0; }");
   GM_addStyle(".true-cost { background-color: #E5F3FF; border: 1px solid #BBB; border-radius: 3px; margin: 10px 0 20px; padding: 8px; }");
-  GM_addStyle(".color-green { color: Green; }");    
+  GM_addStyle(".color-green { color: green; }");
   GM_addStyle(".add-to-cart-margin{ margin: 0px 0 5px; }");
 
   var isProductPage = /\/[dg]p\//.test(location.href),
@@ -44,30 +44,45 @@
 
   // Find product by ASIN from products JSON
   function findProductByAsin(asin){
-    return products[(asin || '').toUpperCase()] || products.B002RP8YH2;
+    var product = products[(asin || '').toUpperCase()],
+        defaultProduct = {};
+
+    if(product){
+      console.log('found product', product.name, product);
+    } else {
+      defaultProduct = products.B002RP8YH2;
+      console.log('did not find product for', asin, 'defaulting to', defaultProduct);
+    }
+
+    return product || defaultProduct;
   }
 
   // Get last donation amount
   function getLastDonation(){
-    return accounting.formatMoney(GM_getValue('lastDonation'));
+    return GM_getValue('lastDonation');
   }
 
   // Set last donation amount
   function setLastDonation(cost){
-    if(cost && cost > 0){
-      GM_setValue('lastDonation', cost);
-    }
+    GM_setValue('lastDonation', cost);
+  }
+
+  // When AJAX changes Add to Cart section
+  function timedAddTrueCostView(){
+    setTimeout(addTrueCostView, 1000);
   }
 
   // For product page
   function addTrueCostView(){
     console.log('add true cost');
 
+    if(!!$('.true-cost').length) return;
+
     // Get cost
     var $cost = $('#priceblock_ourprice'),
         cost = accounting.unformat($cost.text()),
-        $addToCart = $('#add-to-cart-button').closest('.a-button-stack'),
-        asin = $('#ASIN').val(),
+        $addToCart = $('#add-to-cart-button, #add-to-cart-button-ubb').closest('.a-button-stack'),
+        asin = jQuery('#detailBullets_feature_div').find('span:contains("ASIN"):first').find('span:last').text() || $('#ASIN').val(),
         product = findProductByAsin(asin);
 
     var $icoCarbon = $('<i/>').addClass('fa-ico fa fa-cloud').attr('title', 'Carbon'),
@@ -111,12 +126,18 @@
 
     var $inputCheckbox = $('<input/>')
           .attr('type', 'checkbox')
+          .prop('checked', true)
           .addClass('input-checkbox-true-cost'),
-        checkboxText = 'Donate ' + accounting.formatMoney(productCost) + ' to help offset environmental impacts',
+        checkboxText = 'Donate ' + accounting.formatMoney(productCost) + ' to help counteract your environmental impact',
         $donate = $('<label/>')
           .addClass('label-donate')
           .text(checkboxText)
           .prepend($inputCheckbox);
+
+    $(document).on('click', '.input-checkbox-true-cost', function(){
+      var checked = $(this).prop('checked');
+      setLastDonation(checked ? productCost : 0);
+    });
 
     setLastDonation(productCost);
 
@@ -141,9 +162,9 @@
   if(isCheckoutPage){
     console.log('checkout page');
     var lastDonationStep3 = getLastDonation();
-    var totalCostOutputStep3 = "<tr data-testid=''><td class='color-green a-size-medium a-text-left a-text-bold'>";
-	    totalCostOutputStep3 += "True Cost Donation total:</td>";
-  	  totalCostOutputStep3 += "<td class='a-color-price a-size-medium a-text-right a-align-bottom aok-nowrap grand-total-price a-text-bold'>" + lastDonationStep3;
+    var totalCostOutputStep3 = "<tr data-testid='' class='true-cost'><td class='a-size-medium a-text-left a-text-bold'>";
+	    totalCostOutputStep3 += "TrueCost Donation:</td>";
+  	  totalCostOutputStep3 += "<td class='color-green a-size-medium a-text-right a-align-bottom aok-nowrap grand-total-price a-text-bold'>" + accounting.formatMoney(lastDonationStep3);
   	  totalCostOutputStep3 += "</td></tr>";
 
   	var $carOutput = $("tbody").append(totalCostOutputStep3);
@@ -152,9 +173,12 @@
   } else if(isAddToCartPage){
     console.log('added product to cart', getLastDonation());
     var lastDonation = getLastDonation();
+
+    if(!lastDonation) return;
+
     var totalCostOutput = "<div class='true-cost add-to-cart-margin'><span class='a-size-medium a-align-center huc-subtotal'>";
-	    totalCostOutput += "<span><b>True Cost Donation subtotal </b></span>";
-	    totalCostOutput += "<span class='color-green hlb-price a-inline-block a-text-bold'>" + lastDonation + "</span>";
+	    totalCostOutput += "<span><b>Donation subtotal </b></span>";
+	    totalCostOutput += "<span class='color-green hlb-price a-inline-block a-text-bold'>" + accounting.formatMoney(lastDonation) + "</span>";
 	    totalCostOutput += "</span></div>";
 
 
@@ -162,9 +186,8 @@
 
   // Product page
   } else if(isProductPage){
-    $(document).on('change', '#native_dropdown_selected_size_name', function(){
-      setTimeout(addTrueCostView, 1000);
-    });
+    $(document).on('change', '#native_dropdown_selected_size_name', timedAddTrueCostView);
+    $(document).on('click', '.a-declarative', timedAddTrueCostView);
 
     addTrueCostView();
   }
