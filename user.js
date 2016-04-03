@@ -35,7 +35,7 @@
   GM_addStyle(".product-impact { margin-bottom: 10px; }");
   GM_addStyle(".product-impact-header { color: green; padding: 10px 25px 0; }");
   GM_addStyle(".true-cost { background-color: #E5F3FF; border: 1px solid #BBB; border-radius: 3px; margin: 10px 0 20px; padding: 8px; }");
-  GM_addStyle(".color-green { color: green; }");
+  GM_addStyle(".color-green { color: Green; }");
   GM_addStyle(".add-to-cart-margin{ margin: 0px 0 5px; }");
 
   var isProductPage = /\/[dg]p\//.test(location.href),
@@ -72,6 +72,21 @@
     setTimeout(addTrueCostView, 1000);
   }
 
+  // Find product recommendations by category
+  function findProductRecommendations(product){
+    var productCategory = product.category,
+        arrProducts = [];
+
+    console.log('category', productCategory);
+
+    $.each(products, function(key, obj){
+      console.log(key, obj, obj.category);
+      if(obj.name != product.name && obj.category == productCategory) arrProducts.push(obj);
+    });
+
+    return arrProducts;
+  }
+
   // For product page
   function addTrueCostView(){
     console.log('add true cost');
@@ -97,6 +112,8 @@
         productWater = product.water_footprint || 0,
         productWaste = product.waste_footprint || 0,
         productCost = product.total_footprint_cost || 0;
+
+    var productRecommendations = findProductRecommendations(product);
 
     var $valCarbon = productCarbon ? $('<span/>').text(accounting.formatNumber(productCarbon.usage) + ' ' + productCarbon.unit) : '',
         $valEnergy = productEnergy ? $('<span/>').text(accounting.formatNumber(productEnergy.usage) + ' ' + productEnergy.unit) : '',
@@ -154,6 +171,8 @@
       .append($donate)
       .append($productImpact)
       .append($footprint);
+
+    console.log('product recommendations', productRecommendations);
 
     $addToCart.after($wrapper);
   }
