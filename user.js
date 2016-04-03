@@ -177,7 +177,7 @@
     if(!lastDonation) return;
 
     var totalCostOutput = "<div class='true-cost add-to-cart-margin'><span class='a-size-medium a-align-center huc-subtotal'>";
-	    totalCostOutput += "<span><b>Donation subtotal </b></span>";
+	    totalCostOutput += "<span><b>TrueCost subtotal </b></span>";
 	    totalCostOutput += "<span class='color-green hlb-price a-inline-block a-text-bold'>" + accounting.formatMoney(lastDonation) + "</span>";
 	    totalCostOutput += "</span></div>";
 
