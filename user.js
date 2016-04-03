@@ -38,13 +38,12 @@
       isAddToCartPage = /\/huc\//.test(location.href),
       isCheckoutPage = /\/buy\//.test(location.href);
 
-  // Product page
-  if(isProductPage){
+  function addTrueCostView(){
+    console.log('add true cost');
+
     // Get cost
     var $cost = $('#priceblock_ourprice'),
         cost = accounting.unformat($cost.text()),
-        trueCost = cost + 10.0,
-        costDifference = trueCost - cost,
         $addToCart = $('#add-to-cart-button').closest('.a-button-stack'),
         asin = $('#ASIN').val(),
         product = products.shoes[asin] || products.shoes.B002RP8YH2;
@@ -59,7 +58,8 @@
         productEnergy = product.energy_footprint || 0,
         productOzone = product.ozone_footprint || 0,
         productWater = product.water_footprint || 0,
-        productWaste = product.waste_footprint || 0;
+        productWaste = product.waste_footprint || 0,
+        productCost = product.total_footprint_cost || 0;
 
     var $valCarbon = productCarbon ? $('<span/>').text(accounting.formatNumber(productCarbon.usage) + ' ' + productCarbon.unit) : '',
         $valEnergy = productEnergy ? $('<span/>').text(accounting.formatNumber(productEnergy.usage) + ' ' + productEnergy.unit) : '',
@@ -90,7 +90,7 @@
     var $inputCheckbox = $('<input/>')
           .attr('type', 'checkbox')
           .addClass('input-checkbox-true-cost'),
-        checkboxText = 'Donate ' + accounting.formatMoney(costDifference) + ' to help offset environmental impacts',
+        checkboxText = 'Donate ' + accounting.formatMoney(productCost) + ' to help offset environmental impacts',
         $donate = $('<label/>')
           .addClass('label-donate')
           .text(checkboxText)
@@ -111,7 +111,15 @@
       .append($footprint);
 
     $addToCart.after($wrapper);
+  }
 
+  // Product page
+  if(isProductPage){
+    $(document).on('change', '#native_dropdown_selected_size_name', function(){
+      setTimeout(addTrueCostView, 500);
+    });
+
+    addTrueCostView();
   // Add Product To Cart page
   } else if(isAddToCartPage){
     console.log('added product to cart');
