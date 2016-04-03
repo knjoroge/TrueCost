@@ -35,7 +35,7 @@
   GM_addStyle(".product-impact { margin-bottom: 10px; }");
   GM_addStyle(".product-impact-header { color: green; padding: 10px 25px 0; }");
   GM_addStyle(".true-cost { background-color: #E5F3FF; border: 1px solid #BBB; border-radius: 3px; margin: 10px 0 20px; padding: 8px; }");
-  GM_addStyle(".color-green { color: Green; }");    
+  GM_addStyle(".color-green { color: green; }");
   GM_addStyle(".add-to-cart-margin{ margin: 0px 0 5px; }");
 
   var isProductPage = /\/[dg]p\//.test(location.href),
@@ -59,14 +59,12 @@
 
   // Get last donation amount
   function getLastDonation(){
-    return accounting.formatMoney(GM_getValue('lastDonation'));
+    return GM_getValue('lastDonation');
   }
 
   // Set last donation amount
   function setLastDonation(cost){
-    if(cost && cost > 0){
-      GM_setValue('lastDonation', cost);
-    }
+    GM_setValue('lastDonation', cost);
   }
 
   // When AJAX changes Add to Cart section
@@ -128,12 +126,18 @@
 
     var $inputCheckbox = $('<input/>')
           .attr('type', 'checkbox')
+          .prop('checked', true)
           .addClass('input-checkbox-true-cost'),
-        checkboxText = 'Donate ' + accounting.formatMoney(productCost) + ' to help offset environmental impacts',
+        checkboxText = 'Donate ' + accounting.formatMoney(productCost) + ' to help counteract your environmental impact',
         $donate = $('<label/>')
           .addClass('label-donate')
           .text(checkboxText)
           .prepend($inputCheckbox);
+
+    $(document).on('click', '.input-checkbox-true-cost', function(){
+      var checked = $(this).prop('checked');
+      setLastDonation(checked ? productCost : 0);
+    });
 
     setLastDonation(productCost);
 
@@ -161,9 +165,12 @@
   } else if(isAddToCartPage){
     console.log('added product to cart', getLastDonation());
     var lastDonation = getLastDonation();
+
+    if(!lastDonation) return;
+
     var totalCostOutput = "<div class='true-cost add-to-cart-margin'><span class='a-size-medium a-align-center huc-subtotal'>";
     totalCostOutput += "<span><b>Donation subtotal </b></span>";
-    totalCostOutput += "<span class='color-green hlb-price a-inline-block a-text-bold'>" + lastDonation + "</span>";
+    totalCostOutput += "<span class='color-green hlb-price a-inline-block a-text-bold'>" + accounting.formatMoney(lastDonation) + "</span>";
     totalCostOutput += "</span></div>";
 
 
