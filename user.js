@@ -142,7 +142,7 @@
   } else if(isAddToCartPage){
     console.log('added product to cart', getLastDonation());
 
-    var totalCostOutput = "<![CDATA[<span class='a-size-medium a-align-center huc-subtotal'>";
+    var totalCostOutput = "<span class='a-size-medium a-align-center huc-subtotal'>";
     totalCostOutput += "<span><b>Offset subtotal</b> (1 items): </span>";
     totalCostOutput += "<span class='a-color-price hlb-price a-inline-block a-text-bold'>$10</span>";
     totalCostOutput += "</span>";
