@@ -1,0 +1,307 @@
+/* ============================================================
+   TrueCost — Content Script Styles
+   Premium injection UI for Amazon product pages.
+   ============================================================ */
+
+:root {
+  --tc-bg:            #0f1923;
+  --tc-bg-card:       rgba(15, 25, 35, 0.92);
+  --tc-bg-glass:      rgba(255, 255, 255, 0.04);
+  --tc-border:        rgba(255, 255, 255, 0.08);
+  --tc-text:          #e8edf2;
+  --tc-text-muted:    #8899aa;
+  --tc-green:         #34d399;
+  --tc-green-dim:     rgba(52, 211, 153, 0.12);
+  --tc-teal:          #2dd4bf;
+  --tc-blue:          #60a5fa;
+  --tc-amber:         #fbbf24;
+  --tc-red:           #f87171;
+  --tc-orange:        #fb923c;
+  --tc-radius:        14px;
+  --tc-radius-sm:     8px;
+  --tc-font:          'Segoe UI', system-ui, -apple-system, sans-serif;
+  --tc-shadow:        0 8px 32px rgba(0,0,0,0.28), 0 2px 8px rgba(0,0,0,0.18);
+  --tc-transition:    0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---- Main Card ---- */
+.truecost-card {
+  font-family: var(--tc-font);
+  background: var(--tc-bg-card);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid var(--tc-border);
+  border-radius: var(--tc-radius);
+  box-shadow: var(--tc-shadow);
+  color: var(--tc-text);
+  margin: 16px 0 20px;
+  padding: 0;
+  overflow: hidden;
+  animation: tc-slide-in 0.4s var(--tc-transition) both;
+  max-width: 400px;
+}
+
+@keyframes tc-slide-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- Header ---- */
+.truecost-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid var(--tc-border);
+  background: linear-gradient(135deg, rgba(52,211,153,0.08) 0%, transparent 60%);
+}
+
+.truecost-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #059669 0%, #34d399 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(52,211,153,0.2);
+}
+
+.truecost-logo svg {
+  width: 16px;
+  height: 16px;
+  fill: white;
+}
+
+.truecost-title {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--tc-green);
+}
+
+.truecost-subtitle {
+  font-size: 11px;
+  color: var(--tc-text-muted);
+  font-weight: 400;
+  margin-top: 1px;
+}
+
+.truecost-estimate-badge {
+  display: inline-block;
+  background: rgba(251, 191, 36, 0.12);
+  color: var(--tc-amber);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-left: auto;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ---- Impact Grid ---- */
+.truecost-impacts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--tc-border);
+}
+
+.truecost-impact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--tc-bg-card);
+  transition: background var(--tc-transition);
+}
+
+.truecost-impact-item:hover {
+  background: var(--tc-bg-glass);
+}
+
+.truecost-impact-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--tc-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.truecost-impact-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.truecost-impact-icon--carbon   { background: rgba(96,165,250,0.12); }
+.truecost-impact-icon--carbon svg { fill: var(--tc-blue); }
+.truecost-impact-icon--energy   { background: rgba(251,191,36,0.12); }
+.truecost-impact-icon--energy svg { fill: var(--tc-amber); }
+.truecost-impact-icon--water    { background: rgba(45,212,191,0.12); }
+.truecost-impact-icon--water svg  { fill: var(--tc-teal); }
+.truecost-impact-icon--waste    { background: rgba(248,113,113,0.12); }
+.truecost-impact-icon--waste svg  { fill: var(--tc-red); }
+.truecost-impact-icon--ozone    { background: rgba(251,146,60,0.12); }
+.truecost-impact-icon--ozone svg  { fill: var(--tc-orange); }
+
+.truecost-impact-value {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--tc-text);
+}
+
+.truecost-impact-label {
+  font-size: 10.5px;
+  color: var(--tc-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  font-weight: 500;
+  margin-top: 1px;
+}
+
+/* ---- Eco Alternatives ---- */
+.truecost-alternatives {
+  border-top: 1px solid var(--tc-border);
+  padding: 12px 16px;
+  background: rgba(52, 211, 153, 0.03);
+}
+
+.truecost-alt-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--tc-green);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.truecost-alt-icon {
+  display: flex;
+  align-items: center;
+}
+
+.truecost-alt-icon svg {
+  width: 14px;
+  height: 14px;
+  fill: var(--tc-green);
+}
+
+.truecost-alt-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  margin-bottom: 4px;
+  background: var(--tc-bg-glass);
+  border: 1px solid var(--tc-border);
+  border-radius: var(--tc-radius-sm);
+  text-decoration: none;
+  color: var(--tc-text);
+  transition: all var(--tc-transition);
+}
+
+.truecost-alt-item:hover {
+  background: rgba(52, 211, 153, 0.08);
+  border-color: rgba(52, 211, 153, 0.2);
+  transform: translateX(2px);
+}
+
+.truecost-alt-name {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.truecost-alt-badge {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--tc-green);
+  background: var(--tc-green-dim);
+  padding: 2px 8px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+/* ---- Footer / Donate ---- */
+.truecost-footer {
+  padding: 14px 18px;
+  border-top: 1px solid var(--tc-border);
+  background: linear-gradient(135deg, rgba(52,211,153,0.05) 0%, transparent 60%);
+}
+
+.truecost-donate-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.truecost-checkbox {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--tc-text-muted);
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: all var(--tc-transition);
+  flex-shrink: 0;
+}
+
+.truecost-checkbox:checked {
+  background: var(--tc-green);
+  border-color: var(--tc-green);
+  box-shadow: 0 0 12px rgba(52,211,153,0.3);
+}
+
+.truecost-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 6px;
+  width: 5px;
+  height: 9px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.truecost-donate-text {
+  font-size: 13px;
+  color: var(--tc-text);
+  line-height: 1.35;
+}
+
+.truecost-donate-amount {
+  font-weight: 700;
+  color: var(--tc-green);
+}
+
+/* ---- Powered-by line ---- */
+.truecost-powered {
+  text-align: center;
+  font-size: 9.5px;
+  color: var(--tc-text-muted);
+  padding: 8px 18px 12px;
+  opacity: 0.6;
+  letter-spacing: 0.3px;
+}
+
+.truecost-powered a {
+  color: var(--tc-green);
+  text-decoration: none;
+}
+
+.truecost-powered a:hover {
+  text-decoration: underline;
+}
