@@ -49,4 +49,21 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => saveStatus.classList.remove('visible'), 2000);
     });
   });
+
+  const resetDefaultsBtn = document.getElementById('btn-reset-defaults');
+  if (resetDefaultsBtn) {
+    resetDefaultsBtn.addEventListener('click', () => {
+      const defaults = {
+        showCarbon: true, showEnergy: true, showWater: true,
+        showWaste: true, showOzone: true, showAlternatives: true, maxHistory: 50
+      };
+      for (const [key, el] of Object.entries(fields)) {
+        if (el.type === 'checkbox') el.checked = defaults[key] ?? true;
+        else if (el.tagName === 'SELECT') el.value = String(defaults[key] ?? 50);
+      }
+      saveStatus.textContent = '✓ Defaults restored — click Save to apply';
+      saveStatus.classList.add('visible');
+      setTimeout(() => saveStatus.classList.remove('visible'), 3000);
+    });
+  }
 });
