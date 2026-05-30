@@ -201,14 +201,13 @@
     checkbox.addEventListener('change', () => {
       chrome.storage.local.set({ lastDonation: checkbox.checked ? cost : 0 });
     });
-    chrome.storage.local.set({ lastDonation: 0 });
 
     card.appendChild(footer);
 
     // Powered-by
     const powered = document.createElement('div');
     powered.className = 'truecost-powered';
-    powered.innerHTML = `Powered by <a href="https://github.com/truecost4env" target="_blank">TrueCost</a>`;
+    powered.innerHTML = `Powered by <a href="https://github.com/truecost4env" target="_blank" rel="noopener noreferrer">TrueCost</a>`;
     card.appendChild(powered);
 
     return card;

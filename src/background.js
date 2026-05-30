@@ -39,7 +39,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   if (message.type === 'PRODUCT_VIEWED') {
     chrome.storage.local.get({ stats: DEFAULT_STATS, history: [], settings: DEFAULT_SETTINGS }, (result) => {
-      // Update cumulative stats
       const stats = result.stats || { ...DEFAULT_STATS };
       stats.productsViewed = (stats.productsViewed || 0) + 1;
       stats.totalCarbon    = (stats.totalCarbon || 0) + (message.product.greenhouse || 0);
@@ -48,7 +47,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       stats.totalEnergy    = (stats.totalEnergy || 0) + (message.product.energy || 0);
       stats.totalDonation  = (stats.totalDonation || 0) + (message.product.cost || 0);
 
-      // Add to history
       const history = result.history || [];
       const maxHistory = result.settings?.maxHistory || 50;
       history.unshift({
@@ -64,30 +62,20 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         url: message.product.url || ''
       });
 
-      // Trim history to max length
-      if (history.length > maxHistory) {
-        history.length = maxHistory;
-      }
-
+      if (history.length > maxHistory) history.length = maxHistory;
       chrome.storage.local.set({ stats, history });
     });
-  }
-
-  if (message.type === 'RESET_STATS') {
+  } else if (message.type === 'RESET_STATS') {
     chrome.storage.local.set({ stats: { ...DEFAULT_STATS }, history: [] }, () => {
       sendResponse({ ok: true });
     });
     return true;
-  }
-
-  if (message.type === 'GET_DATA') {
+  } else if (message.type === 'GET_DATA') {
     chrome.storage.local.get({ stats: DEFAULT_STATS, history: [], settings: DEFAULT_SETTINGS }, (result) => {
       sendResponse(result);
     });
-    return true; // async response
-  }
-
-  if (message.type === 'SAVE_SETTINGS') {
+    return true;
+  } else if (message.type === 'SAVE_SETTINGS') {
     chrome.storage.local.set({ settings: message.settings });
   }
 });
