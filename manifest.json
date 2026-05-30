@@ -17,7 +17,8 @@
   },
   "permissions": [
     "storage",
-    "activeTab"
+    "activeTab",
+    "tabs"
   ],
   "options_page": "options/options.html",
   "background": {

@@ -162,8 +162,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---- Reset ---- */
   resetBtn.addEventListener('click', () => {
-    chrome.runtime.sendMessage({ type: 'RESET_STATS' });
-    setTimeout(refresh, 150);
+    if (!confirm('Reset all stats and history? This cannot be undone.')) return;
+    resetBtn.disabled = true;
+    chrome.runtime.sendMessage({ type: 'RESET_STATS' }, () => {
+      refresh();
+      resetBtn.textContent = 'Stats Reset';
+      setTimeout(() => {
+        resetBtn.textContent = 'Reset Stats';
+        resetBtn.disabled = false;
+      }, 1500);
+    });
   });
 
   /* ---- Options link ---- */

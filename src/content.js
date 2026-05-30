@@ -189,7 +189,7 @@
     footer.className = 'truecost-footer';
     footer.innerHTML = `
       <label class="truecost-donate-row">
-        <input type="checkbox" class="truecost-checkbox" checked />
+        <input type="checkbox" class="truecost-checkbox" />
         <span class="truecost-donate-text">
           Donate <span class="truecost-donate-amount">${TrueCostData.fmtMoney(cost)}</span>
           to offset your environmental impact
@@ -201,7 +201,7 @@
     checkbox.addEventListener('change', () => {
       chrome.storage.local.set({ lastDonation: checkbox.checked ? cost : 0 });
     });
-    chrome.storage.local.set({ lastDonation: cost });
+    chrome.storage.local.set({ lastDonation: 0 });
 
     card.appendChild(footer);
 
@@ -267,6 +267,8 @@
     });
   }
 
+  const INJECT_DELAY_MS = 800;
+
   /** Watch for Amazon's SPA-style navigation. */
   function observePageChanges() {
     let lastUrl = location.href;
@@ -275,17 +277,16 @@
         lastUrl = location.href;
         const old = document.querySelector('.truecost-card');
         if (old) old.remove();
-        setTimeout(inject, 800);
+        setTimeout(inject, INJECT_DELAY_MS);
       }
     });
     observer.observe(document.body, { childList: true, subtree: true });
   }
 
   // Load settings then run
-  chrome.storage.local.get({ settings: currentSettings, enabled: true }, (result) => {
-    if (result.settings) currentSettings = result.settings;
-    if (result.enabled === false && result.settings?.enabled === undefined) return;
-    if (result.settings?.enabled === false) return;
+  chrome.storage.local.get({ settings: currentSettings }, (result) => {
+    if (result.settings) currentSettings = { ...currentSettings, ...result.settings };
+    if (currentSettings.enabled === false) return;
     inject();
     observePageChanges();
   });
