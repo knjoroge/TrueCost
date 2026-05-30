@@ -62,12 +62,12 @@ const TrueCostData = (() => {
     }
 
     const category = guessCategory(title);
+    if (category === 'unknown') {
+      return { product: null, isEstimate: true, label: null };
+    }
+
     const estimate = TRUECOST_CATEGORY_ESTIMATES[category];
-    return {
-      product: estimate,
-      isEstimate: true,
-      label: estimate.label
-    };
+    return { product: estimate, isEstimate: true, label: estimate.label };
   }
 
   /**

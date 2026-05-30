@@ -1,107 +1,98 @@
-# TrueCost — Environmental Impact Tracker
+# TrueCost
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Manifest V3](https://img.shields.io/badge/Manifest-V3-blue.svg)](manifest.json)
 [![Chrome Extension](https://img.shields.io/badge/Platform-Chrome-yellow.svg)](https://developer.chrome.com/docs/extensions/)
 
-> Chrome extension that reveals the **true environmental cost** of products on Amazon — carbon emissions, water usage, energy consumption, and waste — right on the product page.
+A Chrome extension that shows the environmental cost of products on Amazon — how much carbon, water, energy, and waste goes into making them.
 
-Originally built at the [2016 CleanWeb Hackathon](http://devpost.com/software/truecost), fully modernized for **Manifest V3** in 2026.
+Built at the [2016 CleanWeb Hackathon](http://devpost.com/software/truecost). Updated for modern Chrome in 2026.
+
+---
+
+## What it does
+
+When you visit an Amazon product page, TrueCost adds a card below the "Add to Cart" button showing:
+
+| Metric | What it measures |
+|--------|-----------------|
+| ☁️ Carbon | Greenhouse gases released during manufacturing (kg CO₂) |
+| ⚡ Energy | Electricity and fuel used to produce it (megajoules) |
+| 💧 Water | Water consumed during production (liters) |
+| 🗑️ Waste | Solid waste created (kg) |
+| 🌀 Ozone | Ozone-depleting chemicals released |
+
+It covers 38+ products across 10 categories. For products not in the database, it shows a rough estimate for that category, labeled "Estimate."
 
 ## Features
 
-- 🌿 **Impact Card** — injected directly into Amazon product pages near "Add to Cart"
-- 📊 **38+ products** across 10 categories (shoes, electronics, clothing, furniture, single-use items, etc.)
-- ♻️ **Category fallback** — shows estimated impact for products not in the database
-- 📈 **Dashboard popup** — tracks cumulative environmental impact with bar chart visualization
-- 📜 **Product history** — timestamped log of every product you've viewed
-- ⭐ **Eco alternatives** — suggests greener products in the same category with % impact reduction
-- 🌍 **16 Amazon regions** — works on amazon.com, .co.uk, .ca, .de, .fr, .it, .es, .co.jp, .in, .com.br, .com.au, .com.mx, .nl, .sg, .se, .pl
-- ⚙️ **Options page** — toggle individual impact categories and configure history length
-- 🎚️ **Enable/disable toggle** — turn the overlay on or off from the popup
-- 💚 **Donate checkbox** — opt-in to offset your environmental impact
+- Works on 16 Amazon sites (US, UK, Canada, Germany, Japan, and more)
+- Suggests greener options in the same product category
+- Tracks your cumulative environmental impact in a dashboard
+- Keeps a browsing history so you can look up products again
+- Optional donation to offset your impact (opt-in)
+- Settings to show or hide specific metrics
 
 ## Screenshots
 
-| Impact Card (on Amazon) | Dashboard Popup | Settings |
+| Impact Card | Dashboard | Settings |
 |---|---|---|
-| *(inject card below Add to Cart)* | *(cumulative stats + chart)* | *(toggle categories)* |
+| *(shown below Add to Cart)* | *(cumulative stats + chart)* | *(toggle categories)* |
 
-## Installation (Developer Mode)
+## Install
 
-1. Clone this repository:
+Chrome doesn't allow sideloaded extensions to be shared publicly, but you can run it yourself in developer mode:
+
+1. Clone this repo:
    ```bash
    git clone https://github.com/truecost4env/truecost-chrome-extension.git
    ```
 2. Open Chrome and go to `chrome://extensions`
-3. Enable **Developer mode** (toggle in top-right)
-4. Click **Load unpacked** and select the `TrueCost` directory
-5. Browse any product on [amazon.com](https://www.amazon.com) — the impact card will appear!
+3. Turn on **Developer mode** (toggle in the top-right)
+4. Click **Load unpacked** and select the `TrueCost` folder
+5. Visit any supported Amazon product page — the impact card appears automatically
 
-## How to Use
+## How to use
 
-### 🛒 Viewing Product Impact
-1. Go to any product page on [amazon.com](https://www.amazon.com)
-2. Scroll to the **"Add to Cart"** section — a **TrueCost impact card** will appear just below it
-3. The card shows the product's environmental footprint:
-   - ☁️ **Carbon** — greenhouse gas emissions (kgCO₂e)
-   - ⚡ **Energy** — energy consumed during manufacturing (MJ)
-   - 💧 **Water** — water used in production (Liters)
-   - 🗑️ **Waste** — solid waste generated (Kg)
-   - 🌀 **Ozone** — ozone-depleting substances (kgNMVOCe)
-4. If the exact product is in our database, you'll see precise data. Otherwise, you'll see a category-level **estimate** (marked with an "Estimate" badge)
+**On a product page:** The TrueCost card appears just below the "Add to Cart" section. If the product is in the database, you'll see exact numbers. Otherwise you'll see a category average marked "Estimate."
 
-### 💚 Offsetting Your Impact
-- Each impact card includes a **donation checkbox** (opt-in)
-- The suggested donation amount covers the estimated cost to offset that product's environmental footprint
-- Check the box to donate for that product
+**Dashboard popup:** Click the TrueCost icon in your Chrome toolbar. It shows your running totals across all products you've browsed, plus a chart and history list.
 
-### 📊 Dashboard Popup
-1. Click the **TrueCost icon** in your Chrome toolbar to open the dashboard
-2. View your **cumulative stats** — total carbon, water, waste, and energy across all products you've browsed
-3. See how many products you've viewed and your total offset donation amount
-4. **Toggle** the extension on/off using the switch in the top-right corner
-5. Click **Reset Stats** to clear your cumulative tracking data (requires confirmation)
+**Settings:** Click ⚙ Settings in the popup footer to choose which metrics to show and how many items to keep in your history.
 
-### 🔄 Navigating Between Products
-- The extension automatically detects when you navigate to a new product page (including Amazon's single-page navigation) and updates the impact card accordingly
+**Turning it off:** Use the toggle in the top-right of the popup. The extension stays installed but stops showing cards.
 
-## Project Structure
+**Clearing your data:** Click "Reset Stats" in the dashboard. This wipes all totals and history.
+
+## Supported Amazon sites
+
+amazon.com · amazon.co.uk · amazon.ca · amazon.de · amazon.fr · amazon.it · amazon.es · amazon.co.jp · amazon.in · amazon.com.br · amazon.com.au · amazon.com.mx · amazon.nl · amazon.sg · amazon.se · amazon.pl
+
+## Project layout
 
 ```
 TrueCost/
-├── manifest.json           # Manifest V3 extension config
-├── LICENSE                 # MIT license
-├── icons/                  # Extension icons (16, 48, 128px)
+├── manifest.json        # Extension config
 ├── data/
-│   └── products.js         # Product database + category estimates
+│   └── products.js      # Product database and category estimates
 ├── src/
-│   ├── content.js          # Content script (impact card + alternatives)
-│   ├── content.css         # Impact card + alternatives styles
-│   ├── data.js             # Product lookup module
-│   └── background.js       # Service worker (stats + history)
-├── popup/
-│   ├── popup.html          # Dashboard popup (tabs, chart, history)
-│   ├── popup.css           # Popup styles
-│   └── popup.js            # Popup logic
-└── options/
-    ├── options.html         # Settings page
-    ├── options.css          # Settings styles
-    └── options.js           # Settings logic
+│   ├── content.js       # Injects the impact card into Amazon pages
+│   ├── content.css      # Card styles
+│   ├── data.js          # Product lookup logic
+│   └── background.js    # Tracks stats and history in the background
+├── popup/               # Dashboard popup (HTML, CSS, JS)
+└── options/             # Settings page (HTML, CSS, JS)
 ```
 
-## Data Sources
+## Where the data comes from
 
-Environmental footprint data sourced from:
-- Manufacturer sustainability reports (Nike, Dell, HP, Apple, Samsung, Levi Strauss)
-- [EU Product Environmental Footprint (PEF)](https://environment.ec.europa.eu/topics/circular-economy/green-claims/product-environmental-footprint_en) methodology
+Impact numbers come from manufacturer sustainability reports — Nike, Dell, HP, Apple, Samsung, and Levi Strauss — as well as [EU environmental standards](https://environment.ec.europa.eu/topics/circular-economy/green-claims/product-environmental-footprint_en). The dollar figures represent what it would cost to offset each product's environmental footprint.
 
 ## Contributing
 
-Pull requests welcome. For large changes, open an issue first to discuss the approach.
+Pull requests are welcome. For bigger changes, open an issue first so we can discuss the approach.
 
-1. Fork the repo
-2. Create a feature branch (`git checkout -b feature/your-feature`)
+1. Fork this repo
+2. Create a branch: `git checkout -b feature/your-feature`
 3. Commit your changes
 4. Open a pull request
 

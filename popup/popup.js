@@ -71,6 +71,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  const CATEGORY_ICONS = {
+    shoes: '👟', computers: '💻', phones: '📱', clothing: '👕',
+    appliances: '🏠', single_use: '🗑️', furniture: '🪑',
+    networking: '📡', toys: '🧸', beauty: '💄', unknown: '📦'
+  };
+
   /* ---- Product History ---- */
   function renderHistory(history) {
     if (!history || history.length === 0) {
@@ -83,12 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const row = document.createElement('div');
       row.className = 'history-item';
 
-      const categoryIcons = {
-        shoes: '👟', computers: '💻', phones: '📱', clothing: '👕',
-        appliances: '🏠', single_use: '🗑️', furniture: '🪑',
-        networking: '📡', toys: '🧸', beauty: '💄', unknown: '📦'
-      };
-      const icon = categoryIcons[item.category] || '📦';
+      const icon = CATEGORY_ICONS[item.category] || '📦';
 
       row.innerHTML = `
         <div class="history-icon">${icon}</div>
