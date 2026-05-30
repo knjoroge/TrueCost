@@ -30,21 +30,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Save settings
+  // Save settings — preserve enabled state set by popup toggle
   saveBtn.addEventListener('click', () => {
-    const settings = { enabled: true };
-    for (const [key, el] of Object.entries(fields)) {
-      if (el.type === 'checkbox') {
-        settings[key] = el.checked;
-      } else if (el.tagName === 'SELECT') {
-        settings[key] = parseInt(el.value, 10);
+    chrome.storage.local.get({ settings: {} }, (current) => {
+      const settings = { ...current.settings };
+      for (const [key, el] of Object.entries(fields)) {
+        if (el.type === 'checkbox') {
+          settings[key] = el.checked;
+        } else if (el.tagName === 'SELECT') {
+          settings[key] = parseInt(el.value, 10);
+        }
       }
-    }
 
-    chrome.runtime.sendMessage({ type: 'SAVE_SETTINGS', settings });
+      chrome.runtime.sendMessage({ type: 'SAVE_SETTINGS', settings });
 
-    saveStatus.textContent = '✓ Settings saved';
-    saveStatus.classList.add('visible');
-    setTimeout(() => saveStatus.classList.remove('visible'), 2000);
+      saveStatus.textContent = '✓ Settings saved';
+      saveStatus.classList.add('visible');
+      setTimeout(() => saveStatus.classList.remove('visible'), 2000);
+    });
   });
 });

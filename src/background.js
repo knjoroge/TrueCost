@@ -74,10 +74,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (message.type === 'RESET_STATS') {
-    chrome.storage.local.set({
-      stats: { ...DEFAULT_STATS },
-      history: []
+    chrome.storage.local.set({ stats: { ...DEFAULT_STATS }, history: [] }, () => {
+      sendResponse({ ok: true });
     });
+    return true;
   }
 
   if (message.type === 'GET_DATA') {
