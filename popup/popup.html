@@ -18,7 +18,7 @@
         <p class="popup-version">v2.1 — Environmental Impact Tracker</p>
       </div>
       <label class="popup-toggle" title="Enable / Disable">
-        <input type="checkbox" id="toggle-enabled" checked />
+        <input type="checkbox" id="toggle-enabled" checked aria-label="Enable or disable TrueCost" />
         <span class="popup-toggle-slider"></span>
       </label>
     </header>
@@ -94,10 +94,13 @@
       <div class="history-list" id="history-list">
         <div class="history-empty">No products viewed yet. Browse Amazon to start tracking.</div>
       </div>
+      <div class="history-actions">
+        <button class="btn btn--clear-history" id="btn-clear-history">Clear History</button>
+      </div>
     </div>
 
     <footer class="popup-footer">
-      <a href="#" id="open-options">⚙ Settings</a> •
+      <button class="footer-btn" id="open-options">⚙ Settings</button> •
       Data from manufacturer reports •
       <a href="https://github.com/truecost4env" target="_blank" rel="noopener noreferrer">GitHub</a>
     </footer>

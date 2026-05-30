@@ -181,5 +181,17 @@ document.addEventListener('DOMContentLoaded', () => {
     chrome.runtime.openOptionsPage();
   });
 
+  const clearHistoryBtn = document.getElementById('btn-clear-history');
+  if (clearHistoryBtn) {
+    clearHistoryBtn.addEventListener('click', () => {
+      if (!confirm('Clear all browsing history?')) return;
+      chrome.storage.local.set({ history: [] }, () => {
+        refresh();
+        clearHistoryBtn.textContent = 'Cleared';
+        setTimeout(() => { clearHistoryBtn.textContent = 'Clear History'; }, 1500);
+      });
+    });
+  }
+
   refresh();
 });

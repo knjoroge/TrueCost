@@ -194,7 +194,7 @@ const TRUECOST_PRODUCTS = {
   },
   "B0CX23GFMW": {
     name: "Apple iPad Air M2",
-    category: "phones",
+    category: "computers",
     energy_footprint:     { usage: 380, unit: "MJ" },
     greenhouse_footprint: { usage: 67, unit: "kgCO2e", cost: 2.41 },
     water_footprint:      { usage: 620, unit: "Liters", cost: 0.02 },
