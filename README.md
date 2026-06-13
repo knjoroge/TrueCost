@@ -29,7 +29,7 @@ It covers 38+ products across 10 categories. For products not in the database, i
 - Suggests greener options in the same product category
 - Tracks your cumulative environmental impact in a dashboard
 - Keeps a browsing history so you can look up products again
-- Optional donation to offset your impact (opt-in)
+- Shows the estimated dollar cost to offset each product's impact
 - Settings to show or hide specific metrics
 
 ## Screenshots
@@ -48,7 +48,7 @@ Chrome doesn't allow sideloaded extensions to be shared publicly, but you can ru
    ```
 2. Open Chrome and go to `chrome://extensions`
 3. Turn on **Developer mode** (toggle in the top-right)
-4. Click **Load unpacked** and select the `TrueCost` folder
+4. Click **Load unpacked** and select the cloned `TrueCost` folder
 5. Visit any supported Amazon product page — the impact card appears automatically
 
 ## How to use

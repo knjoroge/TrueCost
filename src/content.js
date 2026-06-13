@@ -10,13 +10,22 @@
 
   // SVG icons (inline — no CDN dependency)
   const ICONS = {
-    leaf: `<svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.71c.72.36 1.5.57 2.34.57C14.28 19.86 19 15.14 19 10c0-4-2-6.5-2-6.5S18.67 6 17 8z"/></svg>`,
-    carbon: `<svg viewBox="0 0 24 24"><path d="M19.35 10.04A7.49 7.49 0 0012 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 000 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>`,
-    energy: `<svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>`,
-    water: `<svg viewBox="0 0 24 24"><path d="M12 2c-5.33 4.55-8 8.48-8 11.8C4 18.78 7.8 22 12 22s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8z"/></svg>`,
-    waste: `<svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>`,
-    ozone: `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/><circle cx="12" cy="12" r="5"/></svg>`,
-    sparkle: `<svg viewBox="0 0 24 24"><path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61z"/></svg>`
+    leaf: `<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.71c.72.36 1.5.57 2.34.57C14.28 19.86 19 15.14 19 10c0-4-2-6.5-2-6.5S18.67 6 17 8z"/></svg>`,
+    carbon: `<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M19.35 10.04A7.49 7.49 0 0012 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 000 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>`,
+    energy: `<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>`,
+    water: `<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2c-5.33 4.55-8 8.48-8 11.8C4 18.78 7.8 22 12 22s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8z"/></svg>`,
+    waste: `<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>`,
+    ozone: `<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/><circle cx="12" cy="12" r="5"/></svg>`,
+    sparkle: `<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61z"/></svg>`
+  };
+
+  // Normalize raw data units to clean display labels.
+  const UNIT_LABELS = {
+    kgCO2e: 'kg CO₂e',
+    Liters: 'L',
+    Kg: 'kg',
+    MJ: 'MJ',
+    kgNMVOCe: 'kg NMVOC'
   };
 
   const IMPACT_META = [
@@ -96,7 +105,7 @@
         ${ICONS[meta.icon]}
       </div>
       <div>
-        <div class="truecost-impact-value">${TrueCostData.fmt(footprint.usage, decimals)} ${footprint.unit}</div>
+        <div class="truecost-impact-value">${TrueCostData.fmt(footprint.usage, decimals)} ${UNIT_LABELS[footprint.unit] || footprint.unit}</div>
         <div class="truecost-impact-label">${meta.label}</div>
       </div>
     `;
@@ -121,7 +130,9 @@
     for (const alt of alts) {
       const row = document.createElement('a');
       row.className = 'truecost-alt-item';
-      row.href = `https://${location.hostname}/dp/${alt.asin}`;
+      // Link to a search on the current domain — the stored ASINs are
+      // US listings and may not resolve on other Amazon sites.
+      row.href = `https://${location.hostname}/s?k=${encodeURIComponent(alt.name)}`;
       row.innerHTML = `
         <span class="truecost-alt-name">${alt.name}</span>
         <span class="truecost-alt-badge">↓ ${alt.pct}% impact</span>
@@ -183,25 +194,16 @@
       if (altSection) card.appendChild(altSection);
     }
 
-    // Footer — Donate checkbox
+    // Footer — estimated offset cost (informational)
     const cost = product.total_footprint_cost || 0;
     const footer = document.createElement('div');
     footer.className = 'truecost-footer';
     footer.innerHTML = `
-      <label class="truecost-donate-row">
-        <input type="checkbox" class="truecost-checkbox" />
-        <span class="truecost-donate-text">
-          Donate <span class="truecost-donate-amount">${TrueCostData.fmtMoney(cost)}</span>
-          to offset your environmental impact
-        </span>
-      </label>
+      <span class="truecost-offset-text">
+        Estimated cost to offset this impact:
+        <span class="truecost-offset-amount">${TrueCostData.fmtMoney(cost)}</span>
+      </span>
     `;
-
-    const checkbox = footer.querySelector('.truecost-checkbox');
-    checkbox.addEventListener('change', () => {
-      chrome.storage.local.set({ lastDonation: checkbox.checked ? cost : 0 });
-    });
-
     card.appendChild(footer);
 
     // Powered-by
