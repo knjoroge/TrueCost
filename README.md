@@ -44,7 +44,7 @@ Chrome doesn't allow sideloaded extensions to be shared publicly, but you can ru
 
 1. Clone this repo:
    ```bash
-   git clone https://github.com/knjoroge/TrueCost.git
+   git clone https://github.com/truecost4env/truecost-chrome-extension.git
    ```
 2. Open Chrome and go to `chrome://extensions`
 3. Turn on **Developer mode** (toggle in the top-right)
