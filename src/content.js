@@ -209,7 +209,7 @@
     // Powered-by
     const powered = document.createElement('div');
     powered.className = 'truecost-powered';
-    powered.innerHTML = `Powered by <a href="https://github.com/knjoroge/TrueCost" target="_blank" rel="noopener noreferrer">TrueCost</a>`;
+    powered.innerHTML = `Powered by <a href="https://github.com/truecost4env" target="_blank" rel="noopener noreferrer">TrueCost</a>`;
     card.appendChild(powered);
 
     return card;
