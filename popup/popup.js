@@ -41,9 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---- Impact Breakdown Chart ---- */
   function renderChart(stats) {
     const data = [
-      { label: 'Carbon', value: stats.totalCarbon || 0, color: '#60a5fa', unit: 'kgCO₂e' },
+      { label: 'Carbon', value: stats.totalCarbon || 0, color: '#60a5fa', unit: 'kg CO₂e' },
       { label: 'Water',  value: stats.totalWater || 0,  color: '#2dd4bf', unit: 'L' },
-      { label: 'Waste',  value: stats.totalWaste || 0,  color: '#f87171', unit: 'Kg' },
+      { label: 'Waste',  value: stats.totalWaste || 0,  color: '#f87171', unit: 'kg' },
       { label: 'Energy', value: stats.totalEnergy || 0, color: '#fbbf24', unit: 'MJ' }
     ];
 
@@ -92,14 +92,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const icon = CATEGORY_ICONS[item.category] || '📦';
 
       row.innerHTML = `
-        <div class="history-icon">${icon}</div>
+        <div class="history-icon" aria-hidden="true">${icon}</div>
         <div class="history-info">
           <div class="history-name">${item.name}</div>
           <div class="history-meta">
             ${item.isEstimate ? '<span class="history-badge">EST</span>' : ''}
-            <span>${fmt(item.carbon)} kgCO₂e</span>
+            <span>${fmt(item.carbon)} kg CO₂e</span>
             <span>•</span>
-            <span>${fmt(item.waste)} Kg waste</span>
+            <span>${fmt(item.waste)} kg waste</span>
           </div>
         </div>
         <div class="history-time">${timeAgo(item.timestamp)}</div>
